@@ -42,7 +42,7 @@ switch(liriCommands) {
 
 // Twitter 
 // `node liri.js my-tweets`
-// This will show my last 20 tweets and when they were created at in your terminal/bash window.
+// This will show my last 20 tweets and when they were created at in my terminal/bash window.
 
 function myTweets() {
     var params = {screen_name: "MellehReyes", count: 20};
@@ -50,13 +50,14 @@ function myTweets() {
         if(!err){
             for(var i = 0; i < tweets.length; i++){
                 var twitterResults = 
+                "-------------------------------------------------------------------------------" + "\r\n" +
                 "@" + tweets[i].user.screen_name + ": " + 
                 tweets[i].text + "\r\n" + 
-                tweets[i].created_at + "\r\n" + 
-                "------------------------------ " + i + " ------------------------------" + "\r\n";
+                tweets[i].created_at + "\r\n"; 
+                "-------------------------------------------------------------------------------" + "\r\n";
                 console.log(twitterResults);
                 log(twitterResults);
-             }
+            }
         }
     });
 };
@@ -82,11 +83,12 @@ function spotifyThisSong() {
             for (var i = 0; i < 5; i++) {
                 if (songInfo[i] != undefined) {
                     var spotifyResults =
+                    "----------------------------------------------------------------------------" + "\r\n" +
                     "Artist(s): " + songInfo[i].artists[0].name + "\r\n" +
                     "Song's Name: " + songInfo[i].name + "\r\n" +
                     "Album the song is from: " + songInfo[i].album.name + "\r\n" +
                     "Preview Url: " + songInfo[i].preview_url + "\r\n" +
-                    "------------------------------ " + i + " ------------------------------" + "\r\n";
+                    "----------------------------------------------------------------------------" + "\r\n";
                     console.log(spotifyResults);
                     log(spotifyResults); 
                 }
@@ -120,22 +122,21 @@ function movieThis(){
         movie = "Mr. Nobody";
     }
     params = movie;
-    // request("http://www.omdbapi.com/?t=" + params + "&y=&plot=short&r=json&tomatoes=true", function (err, response, body) {
     request("http://www.omdbapi.com/?t=" + params + "&y=&plot=short&apikey=trilogy", function (err, response, body) {        
         if (!err && response.statusCode == 200) {
             var movieObject = JSON.parse(body);
             //console.log(movieObject); // Show the text in the terminal
             var movieResults =
-            // "------------------------------ begin ------------------------------" + "\r\n"
-            "Movie Title: " + movieObject.Title+"\r\n"+
-            "Year Released: " + movieObject.Year+"\r\n"+
-            "IMDB Rating: " + movieObject.imdbRating+"\r\n"+
-            "Rotten Tomatoes Rating: " + movieObject.Ratings[1].Value +"\r\n"+
-            "Country: " + movieObject.Country+"\r\n"+
-            "Language: " + movieObject.Language+"\r\n"+
-            "Plot: " + movieObject.Plot+"\r\n"+
-            "Actors: " + movieObject.Actors+"\r\n";
-
+            "-------------------------------------------------------------------------------" + "\r\n" +
+            "Movie Title: " + movieObject.Title + "\r\n" +
+            "Year Released: " + movieObject.Year + "\r\n" +
+            "IMDB Rating: " + movieObject.imdbRating +"\r\n" +
+            "Rotten Tomatoes Rating: " + movieObject.Ratings[1].Value + "\r\n" +
+            "Country: " + movieObject.Country + "\r\n" +
+            "Language: " + movieObject.Language + "\r\n" +
+            "Plot: " + movieObject.Plot + "\r\n" +
+            "Actors: " + movieObject.Actors + "\r\n" +
+            "-------------------------------------------------------------------------------" + "\r\n";
             console.log(movieResults);
             log(movieResults);
         } else {
@@ -162,7 +163,10 @@ function doWhatItSays() {
     });
 };
 
-// Do What It Says function, uses the reads and writes module to access the log.txt file and write everything that returns in terminal in the log.txt file
+// In addition to logging the data to your terminal/bash window, output the data to a .txt file called `log.txt`.
+// Make sure you append each command you run to the `log.txt` file. 
+// Do not overwrite your file each time you run a command.
+
 function log(logResults) {
     fs.appendFile("log.txt", logResults, function (error) {
         if(!error) {
